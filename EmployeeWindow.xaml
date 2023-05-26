@@ -1,0 +1,306 @@
+﻿<Window x:Class="PostAIS.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PostAIS"
+        mc:Ignorable="d"
+        Title="PostAIS" Height="600" Width="1000" WindowStyle="None" WindowState="Maximized">
+    <Grid>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top"
+                       LastChildFill="False">
+                <Label FontSize="18"
+                       Content="Сотрудник:"
+                       FontWeight="Bold"/>
+                <Label x:Name="fioUserLabel"
+                       Content="Фамилия Имя Отчество"
+                       FontSize="18"/>
+                <Button DockPanel.Dock="Right" 
+                        Content="Выход"
+                        Padding="5"
+                        Margin="2"
+                        Click="ExitButtonClick"/>
+            </DockPanel>
+            <TabControl DockPanel.Dock="Bottom"
+                        x:Name="tabControl"
+                        SelectionChanged="TabControlSelectionChanged">
+                <TabItem Header="Обслуживание клиентов"
+                         x:Name="servicesTabItem">
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <DataGrid Grid.Row="0" Grid.Column="0"
+                                  x:Name="servicesDataGrid"
+                                  AutoGenerateColumns="False"
+                                  SelectionChanged="ServicesDataGridSelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код"
+                                                    Width="1*"
+                                                    Binding="{Binding Path=Code}"
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Header="ФИО"
+                                                    Width="2*"
+                                                    Binding="{Binding Path=Client}"
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Услуга"
+                                                    Width="1*"
+                                                    Binding="{Binding Path=OperationType}"
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Время обращения"
+                                                    Width="1*"
+                                                    Binding="{Binding Path=Created}"
+                                                    IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DockPanel Grid.Row="0" Grid.Column="1">
+                            <StackPanel DockPanel.Dock="Top">
+                                <Label Content="Клиент:"
+                                       FontSize="16"
+                                       FontWeight="DemiBold"
+                                       FontStyle="Italic"/>
+                                <DockPanel>
+                                    <Label Content="ФИО:"/>
+                                    <Label Content="-"
+                                       x:Name="clientFioLabel"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="Код:"/>
+                                    <Label Content="-"
+                                       x:Name="clientCodeLabel"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="Паспорт:"/>
+                                    <Label Content="-"
+                                       x:Name="clientPassportLabel"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="Телефон:"/>
+                                    <Label Content="-"
+                                       x:Name="clientTelephoneLabel"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="Адрес:"/>
+                                    <Label Content="-"
+                                       x:Name="clientAddressLabel"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="Услуга:"/>
+                                    <Label Content="-"
+                                       x:Name="clientServiceTypeLabel"/>
+                                </DockPanel>
+                                <Separator BorderBrush="Gray"/>
+                            </StackPanel>
+
+                            <Grid DockPanel.Dock="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0"
+                                        Content="Позвать"/>
+                                <Button Grid.Row="0" Grid.Column="1"
+                                        Content="Завершить"
+                                        Click="DoneServiceButtonClick"/>
+                            </Grid>
+
+                            <TextBlock x:Name="serviceDetailsTextBlock"
+                                       Margin="10, 0, 0, 0"/>
+                        </DockPanel>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Код для регистрации"
+                         x:Name="registrationCodeTabItem">
+                    <StackPanel VerticalAlignment="Center"
+                                MaxWidth="300">
+                        <Label Content="Код для регистрации"
+                               FontSize="26"
+                               HorizontalAlignment="Center"/>
+                        <Label Content="-"
+                               FontSize="100"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               Foreground="DodgerBlue"
+                               x:Name="registrationCodeLabel"/>
+                        <Button Content="Сгенерировать"
+                                Height="60"
+                                FontSize="26"
+                                Click="GenerateRegistrationCodeButtonClick"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Товары"
+                         x:Name="productsTabItem">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" 
+                                    Content="Удалить"
+                                    Click="DeleteProductButtonClick"/>
+                            <Button Grid.Column="1" 
+                                    Content="Добавить"
+                                    Click="AddProductButtonClick"/>
+                        </Grid>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid Grid.Column="0"
+                                      x:Name="productsDataGrid"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id"
+                                                        Width="0.5*"
+                                                        Binding="{Binding Path=Id}"/>
+                                    <DataGridTextColumn Header="Название"
+                                                        Width="1*"
+                                                        Binding="{Binding Path=Title}"/>
+                                    <DataGridTextColumn Header="Описание"
+                                                        Width="2*"
+                                                        Binding="{Binding Path=Description}"/>
+                                    <DataGridTextColumn Header="Цена"
+                                                        Width="0.5*"
+                                                        Binding="{Binding Path=Price}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <StackPanel Grid.Column="1">
+                                <Label Content="Новый товар"
+                                       FontSize="22"
+                                       FontWeight="Bold"/>
+                                <Separator BorderBrush="Gray"
+                                           Margin="0, 0, 0, 5"/>
+                                <DockPanel Margin="0, 0, 0, 5">
+                                    <Label Content="Название"/>
+                                    <TextBox x:Name="productTitleTextBox"/>
+                                </DockPanel>
+                                <DockPanel Margin="0, 0, 0, 5">
+                                    <Label Content="Описание"/>
+                                    <TextBox MinLines="5"
+                                             TextWrapping="Wrap"
+                                             x:Name="productDescriptionTextBox"/>
+                                </DockPanel>
+                                <DockPanel Margin="0, 0, 0, 5">
+                                    <Label Content="Цена"/>
+                                    <TextBox x:Name="productPriceTextBox"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Добавить посылку">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="1">
+                            <DockPanel Margin="0, 0, 0, 5">
+                                <Label Content="ФИО отправителя"/>
+                                <TextBox x:Name="senderFioTextBox"/>
+                            </DockPanel>
+                            <DockPanel Margin="0, 0, 0, 5">
+                                <Label Content="Адрес отправителя"/>
+                                <TextBox x:Name="senderAddressTextBox"/>
+                            </DockPanel>
+                            <DockPanel Margin="0, 0, 0, 5">
+                                <Label Content="Тип посылки"/>
+                                <ComboBox x:Name="packageTypeComboBox"/>
+                            </DockPanel>
+                            <DockPanel Margin="0, 0, 0, 5">
+                                <Label Content="Телефон получателя"/>
+                                <TextBox x:Name="receiverTelephoneNumberTextBox"/>
+                            </DockPanel>
+                            <Button Content="Добавить"
+                                            Click="AddPackageToReceiveButtonClick"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Добавить сотрудника"
+                         x:Name="addEmployeeTabItem">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Bottom" 
+                                Content="Добавить сотрудника"
+                                Click="AddEmployeeButtonClick"/>
+                        <DataGrid DockPanel.Dock="Top"
+                                  IsReadOnly="True"
+                                  AutoGenerateColumns="False"
+                                  x:Name="addEmployeeDataGrid">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Фамилия"
+                                                    Binding="{Binding Path=LastName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Имя"
+                                                    Binding="{Binding Path=FirstName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Отчество"
+                                                    Binding="{Binding Path=MiddleName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Телефон"
+                                                    Binding="{Binding Path=TelephoneNumber}"
+                                                    Width="2*"/>
+                                <DataGridTextColumn Header="Серия паспорта"
+                                                    Binding="{Binding Path=PassportSeries}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Номер паспорта"
+                                                    Binding="{Binding Path=PassportNumber}"
+                                                    Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Удалить сотрудника"
+                         x:Name="removeEmployeeTabItem">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Bottom" 
+                                Content="Удалить сотрудника"
+                                Click="RemoveEmployeeButtonClick"/>
+                        <DataGrid DockPanel.Dock="Top"
+                                  IsReadOnly="True"
+                                  AutoGenerateColumns="False"
+                                  x:Name="removeEmployeeDataGrid">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Фамилия"
+                                                    Binding="{Binding Path=LastName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Имя"
+                                                    Binding="{Binding Path=FirstName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Отчество"
+                                                    Binding="{Binding Path=MiddleName}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Телефон"
+                                                    Binding="{Binding Path=TelephoneNumber}"
+                                                    Width="2*"/>
+                                <DataGridTextColumn Header="Серия паспорта"
+                                                    Binding="{Binding Path=PassportSeries}"
+                                                    Width="1*"/>
+                                <DataGridTextColumn Header="Номер паспорта"
+                                                    Binding="{Binding Path=PassportNumber}"
+                                                    Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

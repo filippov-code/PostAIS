@@ -1,0 +1,73 @@
+﻿<Window x:Class="PostAIS.ClientRegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PostAIS"
+        mc:Ignorable="d"
+        Title="PostAIS" Height="450" Width="800" WindowStyle="None" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="1"
+                    VerticalAlignment="Center">
+            <DockPanel LastChildFill="False">
+                <Button Content="Назад"
+                        Padding="5, 2"
+                        DockPanel.Dock="Left"
+                        Click="ExitButtonClick"/>
+            </DockPanel>
+            <Label Content="Регистрация клиента"
+                   HorizontalAlignment="Center"
+                   FontSize="22"
+                   FontWeight="Bold"/>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="ФИО"/>
+                <TextBox x:Name="FioTextBox"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Дата рождения"/>
+                <DatePicker x:Name="birthdayDatePicker"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Адрес"/>
+                <TextBox x:Name="addressTextBox"/>
+            </DockPanel>
+            <Label Content="Паспорт"
+                   Margin="0, 0, 0, 5"/>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Номер"/>
+                <TextBox MinWidth="120" x:Name="passportNumberTextBox"/>
+                <Label Content="Серия"/>
+                <TextBox x:Name="passportSeriesTextBox"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Номер телефона"/>
+                <TextBox x:Name="telephoneNumberTextBox"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Пароль"/>
+                <PasswordBox x:Name="passwordTextBox"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Повтор"/>
+                <PasswordBox x:Name="passwordRepeatTextBox"/>
+            </DockPanel>
+            <DockPanel Margin="0, 0, 0, 5">
+                <Label Content="Код сотрудника"/>
+                <TextBox x:Name="employeeCodeTextBox"/>
+            </DockPanel>
+            <Button Content="Зарегистрироваться"
+                    MinHeight="30"
+                    Margin="0, 0, 0, 5"
+                    Click="OnRegistrationButtonClick"/>
+        </StackPanel>
+    </Grid>
+</Window>

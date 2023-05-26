@@ -1,0 +1,125 @@
+﻿<Window x:Class="PostAIS.ClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PostAIS"
+        mc:Ignorable="d"
+        Title="PostAIS" Height="450" Width="800" WindowStyle="None" WindowState="Maximized">
+    <Grid>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top"
+                       LastChildFill="False">
+                <Label FontSize="18"
+                       Content="Клиент:"
+                       FontWeight="Bold"/>
+                <Label x:Name="fioUserLabel"
+                       Content="Фамилия Имя Отчество"
+                       FontSize="18"/>
+                <Button DockPanel.Dock="Right" 
+                        Content="Выход"
+                        Padding="5"
+                        Margin="2"
+                        Click="ExitButtonClick"/>
+            </DockPanel>
+            <TabControl SelectionChanged="TabControlSelectionChanged">
+                <TabItem Header="Отправить посылку">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" >
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Тип"/>
+                                <ComboBox x:Name="packageTypeComboBox"
+                                          SelectionChanged="PackageTypeComboBoxSelectionChanged"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Вес"/>
+                                <Label Content="кг." 
+                                       DockPanel.Dock="Right"/>
+                                <TextBox x:Name="weigthTextBox"/>
+                            </DockPanel>
+                            <Label Content="Размер"
+                                   Margin="0, 5"/>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0, 5">
+                                <Label Content="Ширина"/>
+                                <TextBox MinWidth="80"
+                                         x:Name="widthTextBox"/>
+                                <Label Content="см."/>
+                                <Label Content="Высота"/>
+                                <TextBox MinWidth="80"
+                                         x:Name="heightTextBox"/>
+                                <Label Content="см."/>
+                                <Label Content="Длина"/>
+                                <TextBox MinWidth="80"
+                                         x:Name="lengthTextBox"/>
+                                <Label Content="см."/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" >
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Адрес"/>
+                                <TextBox x:Name="addressTextBox"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Доставка"/>
+                                <ComboBox x:Name="deliveryTypeComboBox"
+                                          SelectionChanged="DeliveryTypeComboBoxSelectionChanged"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Длительность"/>
+                                <Label Content="default" 
+                                       x:Name="deliveryTimeLabel"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True"
+                                       Margin="0, 5">
+                                <Label Content="Стоимость"/>
+                                <Label x:Name="deliveryCostLabel" 
+                                       Content="default"
+                                       FontStyle="Oblique" 
+                                       FontWeight="Bold"/>
+                            </DockPanel>
+                            <Button Content="Отправить"
+                                    Margin="5, 5" 
+                                    Click="OnSendPackageButtonClick"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Получить посылку"
+                         x:Name="receivePackageTab">
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Bottom" 
+                                Content="Получить"
+                                Click="OnReceivePackageButtonClick"/>
+                        <DataGrid DockPanel.Dock="Top"
+                                  x:Name="packagesToReceiveDataGrid">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Отправитель" 
+                                                    Width="2*" 
+                                                    Binding="{Binding Path = SenderFio}"/>
+                                <DataGridTextColumn Header="Адрес отправителя" 
+                                                    Width="3*"
+                                                    Binding="{Binding Path = SenderAddress}"/>
+                                <DataGridTextColumn Header="Тип посылки" 
+                                                    Width="1*"
+                                                    Binding="{Binding Path = PackageType}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>
